@@ -139,7 +139,6 @@ exports[`defaultPreferences immutability test > should not modify the config obj
     "refresh": true,
     "sidebarToggle": true,
     "themeToggle": true,
-    "timezone": true,
   },
 }
 `;

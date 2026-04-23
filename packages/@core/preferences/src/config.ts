@@ -140,7 +140,6 @@ const defaultPreferences: Preferences = {
     refresh: true,
     sidebarToggle: true,
     themeToggle: true,
-    timezone: true,
   },
 };
 
