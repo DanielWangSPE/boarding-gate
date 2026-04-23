@@ -1,0 +1,71 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /api
+
+spring:
+  application:
+    name: boarding-gate-backend
+  profiles:
+    active: dev
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://${DB_HOST:127.0.0.1}:${DB_PORT:3306}/${DB_NAME:boarding_gate}?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=Asia/Shanghai&allowPublicKeyRetrieval=true
+    username: ${DB_USER:root}
+    password: ${DB_PASSWORD:root}
+  jackson:
+    default-property-inclusion: ALWAYS
+    time-zone: Asia/Shanghai
+  redis:
+    host: ${REDIS_HOST:127.0.0.1}
+    port: ${REDIS_PORT:6379}
+    password: ${REDIS_PASSWORD:}
+    database: ${REDIS_DB:0}
+    timeout: 3000ms
+    lettuce:
+      pool:
+        max-active: 16
+        max-idle: 8
+        min-idle: 1
+        max-wait: 2000ms
+
+mybatis-plus:
+  mapper-locations: classpath*:mapper/**/*.xml
+  type-aliases-package: com.boardinggate.**.entity
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  global-config:
+    db-config:
+      id-type: AUTO
+      logic-delete-field: deleted
+      logic-delete-value: 1
+      logic-not-delete-value: 0
+
+logging:
+  level:
+    com.boardinggate: debug
+    org.springframework.web: info
+
+app:
+  auth:
+    # SM4 加密材料 TTL（秒）
+    crypto-ttl-seconds: 180
+    # JWT 配置
+    jwt:
+      issuer: boarding-gate
+      access-ttl-seconds: 1800         # Access Token 30 分钟
+      refresh-ttl-seconds: 1209600     # Refresh Token 14 天
+      # RS256 密钥对（classpath 下的 PEM 文件，见 README 生成方法）
+      private-key-location: classpath:keys/jwt-private.pem
+      public-key-location: classpath:keys/jwt-public.pem
+    # Refresh Token Cookie 配置
+    refresh-cookie:
+      name: refreshToken
+      path: /api/auth/refresh
+      same-site: Strict
+      secure: false          # 本地 dev 先关，生产务必开启
+      http-only: true
+    # 加密材料存储后端：redis（默认） / memory（单机本地调试用）
+    crypto-store:
+      type: redis
