@@ -8,6 +8,11 @@ import { defineOverridesPreferences } from '@vben/preferences';
 export const overridesPreferences = defineOverridesPreferences({
   // overrides
   app: {
+    //  业务项目只用中文，锁死 locale 并关闭顶栏语言切换按钮。
+    locale: 'zh-CN',
     name: import.meta.env.VITE_APP_TITLE,
+  },
+  widget: {
+    languageToggle: false,
   },
 });

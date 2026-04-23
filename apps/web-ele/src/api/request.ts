@@ -67,12 +67,12 @@ function createRequestClient(baseURL: string, options?: RequestClientOptions) {
     return accessToken;
   }
 
-  //  请求头处理：Authorization + Accept-Language
+  //  请求头处理：Authorization + Accept-Language（项目仅中文，写死 zh-CN）
   client.addRequestInterceptor({
     fulfilled: async (config) => {
       const accessStore = useAccessStore();
       config.headers.Authorization = formatToken(accessStore.accessToken);
-      config.headers['Accept-Language'] = preferences.app.locale;
+      config.headers['Accept-Language'] = 'zh-CN';
       //  refresh / logout 接口需要带上 Cookie（HttpOnly 的 refreshToken）
       if (
         config.url?.includes('/auth/refresh') ||
