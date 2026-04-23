@@ -15,9 +15,8 @@ export default defineConfig(async () => {
         proxy: {
           '/api': {
             changeOrigin: true,
-            rewrite: (path) => path.replace(/^\/api/, ''),
-            // mock代理目标地址
-            target: 'http://localhost:5320/api',
+            //  后端 Spring Boot 的 context-path 也是 /api，所以不做 rewrite
+            target: 'http://localhost:8080',
             ws: true,
           },
         },

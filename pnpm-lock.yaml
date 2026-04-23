@@ -30,9 +30,6 @@ catalogs:
     '@eslint/js':
       specifier: ^10.0.1
       version: 10.0.1
-    '@faker-js/faker':
-      specifier: ^10.4.0
-      version: 10.4.0
     '@iconify/json':
       specifier: ^2.2.460
       version: 2.2.460
@@ -54,9 +51,6 @@ catalogs:
     '@manypkg/get-packages':
       specifier: ^3.1.0
       version: 3.1.0
-    '@nolebase/vitepress-plugin-git-changelog':
-      specifier: ^2.18.2
-      version: 2.18.2
     '@playwright/test':
       specifier: ^1.59.1
       version: 1.59.1
@@ -123,9 +117,6 @@ catalogs:
     '@types/json-bigint':
       specifier: ^1.0.4
       version: 1.0.4
-    '@types/jsonwebtoken':
-      specifier: ^9.0.10
-      version: 9.0.10
     '@types/lodash.clonedeep':
       specifier: ^4.5.9
       version: 4.5.9
@@ -153,9 +144,6 @@ catalogs:
     '@vee-validate/zod':
       specifier: ^4.15.1
       version: 4.15.1
-    '@vite-pwa/vitepress':
-      specifier: ^1.1.0
-      version: 1.1.0
     '@vitejs/plugin-vue':
       specifier: ^6.0.6
       version: 6.0.6
@@ -288,9 +276,6 @@ catalogs:
     globals:
       specifier: ^17.5.0
       version: 17.5.0
-    h3:
-      specifier: ^1.15.11
-      version: 1.15.11
     happy-dom:
       specifier: ^20.9.0
       version: 20.9.0
@@ -303,9 +288,6 @@ catalogs:
     json-bigint:
       specifier: ^1.0.0
       version: 1.0.0
-    jsonwebtoken:
-      specifier: ^9.0.3
-      version: 9.0.3
     lefthook:
       specifier: ^2.1.5
       version: 2.1.5
@@ -315,9 +297,6 @@ catalogs:
     lucide-vue-next:
       specifier: ^0.577.0
       version: 0.577.0
-    medium-zoom:
-      specifier: ^1.1.0
-      version: 1.1.0
     nitropack:
       specifier: ^2.13.3
       version: 2.13.3
@@ -465,12 +444,6 @@ catalogs:
     vite-plugin-vue-devtools:
       specifier: ^8.1.1
       version: 8.1.1
-    vitepress:
-      specifier: ^1.6.4
-      version: 1.6.4
-    vitepress-plugin-group-icons:
-      specifier: ^1.7.3
-      version: 1.7.3
     vitest:
       specifier: ^4.1.4
       version: 4.1.4
@@ -700,6 +673,9 @@ importers:
       pinia:
         specifier: ^3.0.4
         version: 3.0.4(typescript@6.0.2)(vue@3.5.32(typescript@6.0.2))
+      sm-crypto:
+        specifier: ^0.4.0
+        version: 0.4.0
       vue:
         specifier: ^3.5.32
         version: 3.5.32(typescript@6.0.2)
@@ -7814,6 +7790,9 @@ packages:
     resolution: {integrity: sha512-qQKT4zQxXl8lLwBtHMWwaTcGfFOZviOJet3Oy/xmGk2gZH677CJM9EvtfdSkgWcATZhj/55JZ0rmy3myCT5lsA==}
     hasBin: true
 
+  jsbn@1.1.0:
+    resolution: {integrity: sha512-4bYVV3aAMtDTTu4+xsDYa6sy9GyJ69/amsu9sYF2zqjiEoZA5xJi3BrfX3uY+/IekIu7MwdObdbDWpoZdBv3/A==}
+
   jsdoc-type-pratt-parser@7.1.1:
     resolution: {integrity: sha512-/2uqY7x6bsrpi3i9LVU6J89352C0rpMk0as8trXxCtvd4kPk1ke/Eyif6wqfSLvoNJqcDG9Vk4UsXgygzCt2xA==}
     engines: {node: '>=20.0.0'}
@@ -9527,6 +9506,9 @@ packages:
   slice-ansi@8.0.0:
     resolution: {integrity: sha512-stxByr12oeeOyY2BlviTNQlYV5xOj47GirPr4yA1hE9JCtxfQN0+tVbkxwCtYDQWhEKWFHsEK48ORg5jrouCAg==}
     engines: {node: '>=20'}
+
+  sm-crypto@0.4.0:
+    resolution: {integrity: sha512-OexH2V1EqmhXuOIPGoCl55OjMF0wwPUM/zhUjT0Q6vHBeopSRvTNRy76/1eRoFs3VBKt39hdFnxwpFmooHYa2A==}
 
   smob@1.6.1:
     resolution: {integrity: sha512-KAkBqZl3c2GvNgNhcoyJae1aKldDW0LO279wF9bk1PnluRTETKBq0WyzRXxEhoQLk56yHaOY4JCBEKDuJIET5g==}
@@ -17036,6 +17018,8 @@ snapshots:
     dependencies:
       argparse: 2.0.1
 
+  jsbn@1.1.0: {}
+
   jsdoc-type-pratt-parser@7.1.1: {}
 
   jsesc@3.1.0: {}
@@ -18911,6 +18895,10 @@ snapshots:
     dependencies:
       ansi-styles: 6.2.3
       is-fullwidth-code-point: 5.1.0
+
+  sm-crypto@0.4.0:
+    dependencies:
+      jsbn: 1.1.0
 
   smob@1.6.1: {}
 

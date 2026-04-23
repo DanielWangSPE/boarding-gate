@@ -6,11 +6,11 @@
 --   design-docs/coding/01-认证与会话管理/01-03-会话管理.md
 -- ============================================================
 
-CREATE DATABASE IF NOT EXISTS `boarding_gate`
+CREATE DATABASE IF NOT EXISTS `boarding-gate`
     DEFAULT CHARACTER SET utf8mb4
     DEFAULT COLLATE utf8mb4_0900_ai_ci;
 
-USE `boarding_gate`;
+USE `boarding-gate`;
 
 -- ------------------------------------------------------------
 -- 系统用户表

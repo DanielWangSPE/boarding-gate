@@ -130,6 +130,16 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
+                    <!--
+                        强制 fork 出的 JVM 使用 UTF-8，避免 Windows 默认 GBK 导致日志/
+                        MyBatis StdOut 中文乱码。终端侧还需 chcp 65001（参见 README）。
+                    -->
+                    <jvmArguments>
+                        -Dfile.encoding=UTF-8
+                        -Dsun.jnu.encoding=UTF-8
+                        -Dsun.stdout.encoding=UTF-8
+                        -Dsun.stderr.encoding=UTF-8
+                    </jvmArguments>
                 </configuration>
             </plugin>
         </plugins>

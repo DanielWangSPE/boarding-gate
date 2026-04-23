@@ -39,7 +39,8 @@ public class AuthService {
         String userAgent = httpReq.getHeader("User-Agent");
 
         //  步骤 2：解析并单次消费 cryptoId，SM4 解密密文得到明文密码
-        String plainPassword = cryptoService.consumeAndDecrypt(req.getCryptoId(), req.getPassword());
+        String plainPassword =
+                cryptoService.consumeAndDecrypt(req.getCryptoId(), req.getPassword()).trim();
 
         //  步骤 3：查询用户
         SysUser user = sysUserService.findByUsername(req.getUsername());

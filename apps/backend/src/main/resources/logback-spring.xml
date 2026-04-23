@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+    覆盖 Spring Boot 默认 logback-base，仅为了把 ConsoleAppender 的输出字符集
+    明确固定为 UTF-8。其余配置（日志级别、文件归档等）仍由 Spring Boot
+    application.yml 中的 logging.* 负责控制。
+-->
+<configuration scan="true" scanPeriod="30 seconds">
+
+    <include resource="org/springframework/boot/logging/logback/defaults.xml"/>
+    <include resource="org/springframework/boot/logging/logback/console-appender.xml"/>
+
+    <!--
+        console-appender.xml 已注册了名为 CONSOLE 的 appender，
+        这里把它替换成 charset=UTF-8 的版本，避免 Windows 默认 GBK 编码日志。
+    -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <pattern>${CONSOLE_LOG_PATTERN}</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+    <!--
+        项目包日志级别保持与 application.yml 中 logging.level.com.boardinggate 一致。
+        这里不单独配置 logger，沿用 Spring Boot 根据 yml 注入的层级。
+    -->
+</configuration>
