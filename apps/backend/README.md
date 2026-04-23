@@ -3,6 +3,7 @@
 Boarding Gate 后端服务（Java 8 + Spring Boot 2.7 + MySQL 8）。
 
 首批实现对应设计文档：
+
 - `design-docs/coding/01-认证与会话管理/01-01-登录认证.md`
 - `design-docs/coding/01-认证与会话管理/01-01-登录认证.spec.md`
 
@@ -63,12 +64,12 @@ mysql -uroot -p < src/main/resources/db/data.sql
 
 测试账号（密码均为 `123456`）：
 
-| 用户名 | 说明 | 预期行为 |
-| --- | --- | --- |
-| `admin` | 超级管理员，已启用 | 正常登录成功 |
-| `jack` | 普通用户，已启用 | 正常登录成功 |
-| `demo` | 已停用 | 返回业务码 `A0212` |
-| `reset` | 需要强制改密 | 返回业务码 `A0220`，data 中仍含 accessToken |
+| 用户名  | 说明               | 预期行为                                    |
+| ------- | ------------------ | ------------------------------------------- |
+| `admin` | 超级管理员，已启用 | 正常登录成功                                |
+| `jack`  | 普通用户，已启用   | 正常登录成功                                |
+| `demo`  | 已停用             | 返回业务码 `A0212`                          |
+| `reset` | 需要强制改密       | 返回业务码 `A0220`，data 中仍含 accessToken |
 
 ## 4. 配置数据库与 Redis
 
@@ -237,6 +238,7 @@ curl -i -X POST http://localhost:8080/api/auth/logout \
 ```
 
 效果：
+
 1. 在 Redis 写入 `auth:session:revoked:{sessionId}`，TTL 与 Refresh TTL 对齐；
 2. `sys_session.status` 置 0，`expires_at` 置当前时间；
 3. 响应头下发 `Set-Cookie: refreshToken=; Max-Age=0` 清除浏览器 Cookie。
@@ -271,11 +273,11 @@ curl -i http://localhost:8080/api/user/me \
 
 常见失败场景：
 
-| 场景 | 业务码 |
-| --- | --- |
+| 场景                             | 业务码  |
+| -------------------------------- | ------- |
 | 未带 `Authorization: Bearer ...` | `A0240` |
-| Token 签名/过期/格式错误 | `A0232` |
-| 对应会话已被 logout 吊销 | `A0231` |
+| Token 签名/过期/格式错误         | `A0232` |
+| 对应会话已被 logout 吊销         | `A0231` |
 
 Controller 写法（零样板）：
 
@@ -284,9 +286,7 @@ Controller 写法（零样板）：
 public ApiResponse<MeResp> me(@CurrentUser LoginUser user) { ... }
 ```
 
-过滤器在进入 Controller 之前已完成：RS256 签名校验 → 过期校验 → `tokenType=access` 校验 →
-Redis `auth:session:revoked:{sessionId}` 吊销命中检查 → 写入 `LoginUserContext`；Controller
-拿到的请求必然已是登录态。
+过滤器在进入 Controller 之前已完成：RS256 签名校验 → 过期校验 → `tokenType=access` 校验 → Redis `auth:session:revoked:{sessionId}` 吊销命中检查 → 写入 `LoginUserContext`；Controller拿到的请求必然已是登录态。
 
 白名单路径（无需 Token）：
 
@@ -301,20 +301,20 @@ Redis `auth:session:revoked:{sessionId}` 吊销命中检查 → 写入 `LoginUse
 
 ## 8. 业务错误码
 
-| HTTP | code | 含义 |
-| --- | --- | --- |
-| 200 | `"200"` | 成功 |
-| 200 | `"A0210"` | 用户名或密码错误 |
-| 200 | `"A0212"` | 账号已停用 |
-| 200 | `"A0213"` | 加密参数无效/过期/已使用 |
-| 200 | `"A0215"` | 服务端暂无法签发加密参数 |
-| 200 | `"A0220"` | 需要强制修改密码（data 中仍含 accessToken） |
-| 200 | `"A0230"` | Refresh Token 无效或已过期 |
-| 200 | `"A0231"` | Refresh Token / 会话已被吊销 |
-| 200 | `"A0232"` | Access Token 无效或已过期 |
-| 200 | `"A0240"` | 未登录或凭证缺失 |
-| 200 | `"A0400"` | 请求参数不合法 |
-| 200 | `"B0500"` | 服务器内部错误 |
+| HTTP | code      | 含义                                        |
+| ---- | --------- | ------------------------------------------- |
+| 200  | `"200"`   | 成功                                        |
+| 200  | `"A0210"` | 用户名或密码错误                            |
+| 200  | `"A0212"` | 账号已停用                                  |
+| 200  | `"A0213"` | 加密参数无效/过期/已使用                    |
+| 200  | `"A0215"` | 服务端暂无法签发加密参数                    |
+| 200  | `"A0220"` | 需要强制修改密码（data 中仍含 accessToken） |
+| 200  | `"A0230"` | Refresh Token 无效或已过期                  |
+| 200  | `"A0231"` | Refresh Token / 会话已被吊销                |
+| 200  | `"A0232"` | Access Token 无效或已过期                   |
+| 200  | `"A0240"` | 未登录或凭证缺失                            |
+| 200  | `"A0400"` | 请求参数不合法                              |
+| 200  | `"B0500"` | 服务器内部错误                              |
 
 > 所有业务响应均为 HTTP 200，通过外壳中的字符串 `code` 区分；前端判断成功须用 `code === '200'`。
 
